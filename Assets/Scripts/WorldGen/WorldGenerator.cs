@@ -1,51 +1,43 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
-public class WorldGenerator : MonoBehaviour
+public static class WorldGenerator
 {
-    private struct PlanetElement
+    private static List<PlanetElement.InstanceInfos> _elements = new List<PlanetElement.InstanceInfos>();
+
+    public static void GeneratePlanet(Planet.Type type, Transform planetTransform)
     {
-        public float angularSize;
+        List<PlanetElement> _availablePlanetElements = GetElementsForType(type);
 
-        public PlanetElement(float angularSize) => this.angularSize = angularSize;
+        float totalSize = 0;
 
-        public static float operator +(PlanetElement e1, PlanetElement e2) => e1.angularSize + e2.angularSize;
-    }
-
-
-    private float _minSpaceBetweenElements = 22.5f;
-
-    private PlanetElement[] _availablePlanetElements = new PlanetElement[] {
-        new PlanetElement(20),
-        new PlanetElement(30),
-        new PlanetElement(180),
-        new PlanetElement(60),
-        new PlanetElement(10),
-        new PlanetElement(50)
-    };
-
-
-    List<PlanetElement> d = new List<PlanetElement>();
-
-    private void Awake()
-    {
-
-
-        float getCurrentSum()
+        while (totalSize <= 360.0f)
         {
-            float v = 0;
+            // Get a random planet element from the available list
+            PlanetElement e = _availablePlanetElements[Random.Range(0, _availablePlanetElements.Count)];
 
-            for (int i = 0; i < d.Count; i++)
-            {
-                v += d[i].angularSize;
-            }
+            if (totalSize + e.angularSize > 360.0f)
+                return;
 
-            return v;
+            PlanetElement.InstanceInfos instance = new PlanetElement.InstanceInfos(totalSize, e.angularSize, e.Visual, planetTransform);
+
+            // Instantiate planetObject
+            Object.Instantiate(instance.Prop, instance.GetObjectPosition(), instance.GetObjectRotation());
+
+            _elements.Add(instance);
+            totalSize += e.angularSize;
         }
     }
 
-    private void Update()
+    private static List<PlanetElement> GetElementsForType(Planet.Type type)
     {
+        PlanetElement[] e = Resources.LoadAll<PlanetElement>("PlanetElements");
+        List<PlanetElement> finalElementList = new List<PlanetElement>();
+        foreach (PlanetElement p in e.Where((a) => a.AvailableOnPlanetType.HasFlag(type)))
+            finalElementList.Add(p);
+
+        return finalElementList;
     }
 }

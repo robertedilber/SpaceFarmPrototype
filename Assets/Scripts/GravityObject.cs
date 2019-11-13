@@ -42,7 +42,6 @@ public abstract class GravityObject : MonoBehaviour
         Vector3 vectorToTarget = hit.normal.normalized;
         float angle = (Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg) + 90;
 
-        float rotationSpeed = Vector2.Dot(_currentNormal, _lastNormal);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, angle), 250 * Time.deltaTime);
         _lastNormal = _currentNormal;
     }

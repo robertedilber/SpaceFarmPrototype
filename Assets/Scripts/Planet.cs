@@ -6,6 +6,18 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Planet : MonoBehaviour, IAstronomicalObject
 {
+    [Flags]
+    public enum Type
+    {
+        None = 0,
+        A = 1,
+        B = 2,
+        C = 4,
+        D = 8,
+        E = 16,
+        F = 32
+    }
+
     public float Mass { get => _mass; }
     [SerializeField] private float _mass;
 
@@ -34,6 +46,7 @@ public class Planet : MonoBehaviour, IAstronomicalObject
     private void Awake()
     {
         Collider = GetComponent<Collider2D>();
+        WorldGenerator.GeneratePlanet(Type.A, transform);
     }
 
     private void Update()
