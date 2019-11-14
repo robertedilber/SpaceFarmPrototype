@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: LeFeu_Arbre 2
   m_EditorClassIdentifier: 
   AvailableOnPlanetType: 32
-  Visual: {fileID: 2937483862506200968, guid: 0d1c4e4da4968c2469bc11d3a4a33064, type: 3}
+  Visual: {fileID: -927199367670048503, guid: 3c668c24c550b01439c281074683f029, type: 3}
   angularSize: 45
