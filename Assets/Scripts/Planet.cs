@@ -18,7 +18,7 @@ public class Planet : MonoBehaviour, IAstronomicalObject
         F = 32
     }
 
-    public Collider2D Collider { get; private set; }
+    public CircleCollider2D Collider { get; private set; }
 
     public string Name { get; set; }
     public void GenerateName() => Name = "Planet";
@@ -33,8 +33,8 @@ public class Planet : MonoBehaviour, IAstronomicalObject
 
     private void Awake()
     {
-        Collider = GetComponent<Collider2D>();
-        //WorldGenerator.GeneratePlanet(Type.A, transform);
+        Collider = GetComponent<CircleCollider2D>();
+        WorldGenerator.GeneratePlanet(Type.A, transform);
     }
 
     public void PlaceSeedBox(PlantationBox seedBox, Vector2 position)

@@ -52,7 +52,8 @@ public class Player : GravityObject
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition = new Vector3(mousePosition.x, mousePosition.y, CurrentPlanet.transform.position.z);
             Vector3 direction = mousePosition - CurrentPlanet.transform.position;
-            Vector3 pos = CurrentPlanet.transform.position + direction.normalized * (CurrentPlanet.transform.localScale.x / 2);
+            Vector3 pos = CurrentPlanet.transform.position + direction.normalized * CurrentPlanet.Collider.radius;
+
             if (Vector2.Distance(mousePosition, pos) <= 0.5f)
             {
                 CurrentPlanet.PlaceSeedBox(new DefaultPlantationBox(CurrentPlanet, Resources.Load<GameObject>("PlantationBox"), 0.2f), pos);
